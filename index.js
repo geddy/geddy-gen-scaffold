@@ -4,7 +4,7 @@ var path = require('path');
 module.exports = function(appPath, args) {
   var validTasks = ['default', 'help'];
 
-  // keep support of old style gen syntax
+  // keep support of old style gegun syntax
   if (args.length > 0 && validTasks.indexOf(args[0]) === -1) {
     args = ['default[' + args.join(',') + ']'];
   }
