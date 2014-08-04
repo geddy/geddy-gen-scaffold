@@ -5,21 +5,31 @@ var path = require('path')
   , genutils = require('geddy-genutils')
   , genDirname = __dirname;
 
+var ns = 'scaffold';
+
 // Load the basic Geddy toolkit
 genutils.loadGeddy();
 var utils = genutils.loadGeddyUtils();
 
 // Tasks
 task('default', function() {
-  // add your code here
-  console.log('This is the default task of this generator.\nIt does nothing yet.');
+  var self = this;
+  var t = jake.Task['scaffold:create'];
+  t.reenable();
+  t.invoke.apply(t, Array.prototype.slice.call(arguments));
 });
 
-task('help', function() {
-  console.log(
-    fs.readFileSync(
-      path.join(__dirname, 'help.txt'),
-      {encoding: 'utf8'}
-    )
-  );
+namespace(ns, function() {
+  task('help', function() {
+    console.log(
+      fs.readFileSync(
+        path.join(__dirname, 'help.txt'),
+        {encoding: 'utf8'}
+      )
+    );
+  });
+
+  task('create', function() {
+
+  });
 });
