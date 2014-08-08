@@ -4,17 +4,27 @@ Scaffolds a geddy resource for you.
 
 Usage:
 
-    geddy gen scaffold create[name,framework,template]
+    geddy gen scaffold create[name,propertyA:datatype,propertyB:datatype,...] --bower engine=... framework=... templates=...
 
-        name          Name of your view including subdirectories (e.g. users/account)
-        template      (optional) Path to the template file to use. Overrides automatic decision based on selected CSS and JS framework.
-        framework     (optional) CSS and JS framework to use.
-                      Separate the frameworks by a "/", the CSS framework beeing the first. e.g. "bootstrap/angular"
-                      See below for a list of supported frameworks.
-        -p --public   (optional) if set the view will be created in the public/views, instead of the app/views folder
-        -f --force    (optional) use to replace an existing view
+        name                  Name of your view including subdirectories (e.g. users/account)
+        properties            Properties are optional
+        engine=value          Name of the template engine to use (see below for supported engines)
+        framework=css/js      (optional) CSS and JS framework to use.
+                              Separate the frameworks by a "/", the CSS framework beeing the first. e.g. "bootstrap/angular"
+                              See below for a list of supported frameworks.
+        templates=value       (optional) Override path to the templates directory.
+                              The directory must contain add.html.ejs, index.html.ejs, edit.html.ejs, remove.html.ejs and view.html.ejs
+        -p --public           (optional) if set the view will be created in the public/views, instead of the app/views folder
+        -f --force            (optional) use to replace an existing view
+        --bower               (optional) if set it will setup bower (if not done so yet) and install the bower dependencies
 
 Supported Frameworks:
 
-  CSS: bootstrap, foundation
-  JS: angular, rivets
+  CSS: bootstrap, foundation, none
+  JS: angular, rivets, none
+
+Supported Engines:
+
+  ejs, handlebars, jade, mustache, swig, none
+
+  Use "none" only for client side (public) scaffolds

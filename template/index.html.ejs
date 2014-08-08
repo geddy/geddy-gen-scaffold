@@ -1,0 +1,6 @@
+<% if (framework.css === 'bootstrap') { %>
+<div class="page-header">
+    <h1>All <%= names.constructor.plural %></h1>
+    <@- linkTo('Create a new <%= names.constructor.singular %>', add<%= names.constructor.singular %>Path, {class: 'btn pull-right'}); @>
+</div>
+<% } %>
