@@ -1,0 +1,67 @@
+<%
+var listAttrs, itemAttrs, jadeListAttrs, jadeItemAttrs;
+
+switch(framework.css) {
+  case 'bootstrap':
+    listAttrs = ' class="model-list"';
+    jadeListAttrs = '.model-list';
+    itemAttrs = ' class="row list-item"';
+    jadeItemAttrs = '.row.list-item';
+    break;
+
+  case 'foundation':
+    listAttrs = ' class="model-list"';
+    jadeListAttrs = '.model-list';
+    itemAttrs = ' class="row list-item"';
+    jadeItemAttrs = '.row.list-item';
+    break;
+
+  default:
+    listAttrs = ' class="model-list"';
+    jadeListAttrs = '.model-list';
+    itemAttrs = ' class="list-item"';
+    jadeItemAttrs = '.list-item';
+}
+%>
+<% if (engine !== 'jade') { %>
+
+<div<%- listAttrs %> id="<%= names.property.plural %>-list">
+<% switch(engine) {
+case 'ejs': %>
+<@ if (<%= names.property.plural %>) { @>
+  <@ for (var i = 0, ii = <%= names.property.plural %>.length; i < ii; i++) { @>
+<% break; case 'handlebars': %>
+{{#each <%= names.property.plural %> }}
+<% break; case 'mustache': %>
+{{#<%= names.property.plural %>}}
+<% break; case 'swig': %>
+{% if <%= names.property.plural %> %}
+  {% for <%= names.property.singular %> in <%= names.property.plural %> %}
+<% break; } %>
+  <div<%- itemAttrs %> id="<%= names.property.singular %>-<@= <%= names.property.plural %>[i].id; @>">
+    <h3><%- genutils.template.unescaped("linkTo(" + names.property.plural + "[i]." + properties['default'].name || "id" + ", " + names.property.singular + "Path(" + names.property.plural + "[i].id))", engine); %></h3>
+  </div>
+<% switch(engine) {
+case 'ejs': %>
+  <@ } @>
+<@ } @>
+<% break; case 'handlebars': %>
+{{/each}}
+<% break; case 'mustache': %>
+{{/<%= names.property.plural %>}}
+<% break; case 'swig': %>
+  {% endfor %}
+{% endif %}
+<% break; } %>
+</div>
+
+<% } else { %>
+
+<%- jadeListAttrs %>#<%= names.property.plural %>-list
+  if <%= names.property.plural %>
+  each <%= names.property.singular %> in <%= names.property.plural %>
+  <%- jadeItemAttrs %>#<%= names.property.singular %>-<@= <%= names.property.plural %>[i].id; @>
+    h3
+      <%- genutils.template.unescaped("linkTo(" + names.property.plural + "[i]." + properties['default'].name || "id" + ", " + names.property.singular + "Path(" + names.property.plural + "[i].id))", engine); %>
+
+<% } %>

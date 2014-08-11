@@ -29,9 +29,9 @@ var tests = {
     // go into app directory
     process.chdir(testAppDir);
   },
-  'Create Zooby scaffold': function(next)
+  'Create Zooby scaffold without engine and framework specified --bower': function(next)
   {
-    createScaffold('Zooby', [], function(err, stdout, stderr) {
+    createScaffold('Zooby', ['--bower'], function(err, stdout, stderr) {
       if (err) {
         console.error(err);
         fail();

@@ -1,6 +1,41 @@
-<% if (framework.css === 'bootstrap') { %>
-<div class="page-header">
+<%
+var btnClass, attrs, jadeAttrs;
+
+switch(framework.css) {
+  case 'bootstrap':
+    btnClass = 'btn btn-success pull-right';
+    attrs = ' class="page-header"';
+    jadeAttrs = '.page-header';
+    break;
+
+  case 'foundation':
+    btnClass = 'button success right';
+    attrs = ' class="panel clearfix"';
+    jadeAttrs = '.panel';
+    break;
+
+  default:
+    btnClass = 'button';
+    attrs = ' class="resource-index-header"';
+    jadeAttrs = '.resource-index-header';
+}
+%>
+<% if (engine !== 'jade') { %>
+
+<div<%- attrs %>>
     <h1>All <%= names.constructor.plural %></h1>
-    <@- linkTo('Create a new <%= names.constructor.singular %>', add<%= names.constructor.singular %>Path, {class: 'btn pull-right'}); @>
+    <%- genutils.template.unescaped("linkTo('Create a new " + names.constructor.singular + "', add" + names.constructor.singular + "Path, {class: '" + btnClass + "'})", engine); %>
 </div>
+
+<%- genutils.template.partial('list', engine); %>
+
+<% } else { %>
+
+<%- jadeAttrs %>
+  h1
+    All <%= names.constructor.plural %>
+  <%- genutils.template.unescaped("linkTo('Create a new " + names.constructor.singular + "', add" + names.constructor.singular + "Path, {class: '" + btnClass + "'})", engine); %>
+
+<%- genutils.template.partial('list', engine); %>
+
 <% } %>

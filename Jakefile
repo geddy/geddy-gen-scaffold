@@ -64,6 +64,7 @@ namespace(ns, function() {
       var templatesDir = process.env['templates'] || path.join(__dirname, 'template');
     }
 
+    var bower = genutils.flagSet(null, '--bower');
     var ext = genutils.template.getExtFromEngine(engine);
 
     // get model gen helpers
@@ -77,7 +78,8 @@ namespace(ns, function() {
       framework: framework,
       name: name,
       properties: properties,
-      names: names
+      names: names,
+      genutils: genutils
     };
 
     // create resource
@@ -91,6 +93,41 @@ namespace(ns, function() {
         return;
       }
 
+      if (bower) {
+        setupBower(function() {
+          createViews();
+          complete();
+        });
+      }
+      else {
+        createViews();
+        complete();
+      }
+    }
+
+    function setupBower(cb)
+    {
+      genutils.jake.loadFiles(genutils.getGenDir('geddy-gen-app'));
+      var t = jake.Task['app:bower'];
+      t.on('complete', function() {
+        var deps = ['jquery'];
+
+        console.log('installing bower components now ...');
+        var deps = ['jquery'];
+        if (['bootstrap', 'foundation'].indexOf(framework.css) !== -1) {
+          deps.push(framework.css);
+        }
+
+        genutils.bower.install(deps, function() {
+          cb();
+        });
+
+      });
+      t.invoke();
+    }
+
+    function createViews()
+    {
       // create views
       genutils.jake.loadFiles(genutils.getGenDir('geddy-gen-view'));
       var viewTask = jake.Task['view:create'];
@@ -108,13 +145,11 @@ namespace(ns, function() {
           transformTemplate
         );
       });
+    }
 
-      function transformTemplate(content)
-      {
-        return content.replace(/\<\@/g, '<%').replace(/\@\>/g, '%>').trim();
-      }
-
-      complete();
+    function transformTemplate(content)
+    {
+      return content.replace(/\<\@/g, '<%').replace(/\@\>/g, '%>').trim();
     }
   });
 
