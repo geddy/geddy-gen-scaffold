@@ -12,6 +12,7 @@ before_script:
   - rm -R -f node_modules/geddy-gen-controller
   - rm -R -f node_modules/geddy-gen-resource
   - rm -R -f node_modules/geddy-gen-view
+  - rm -R -f node_modules/geddy-gen-app
   - npm install https://github.com/mde/jake/archive/master.tar.gz
   - npm install https://github.com/mde/utilities/archive/master.tar.gz
   - npm install https://github.com/geddy/geddy/archive/master.tar.gz
@@ -20,5 +21,6 @@ before_script:
   - npm install https://github.com/geddy/geddy-gen-controller/archive/master.tar.gz
   - npm install https://github.com/geddy/geddy-gen-resource/archive/master.tar.gz
   - npm install https://github.com/geddy/geddy-gen-view/archive/master.tar.gz
+  - npm install https://github.com/geddy/geddy-gen-app/archive/master.tar.gz
 
 script: node_modules/jake/bin/cli.js test --trace
