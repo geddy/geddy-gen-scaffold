@@ -175,7 +175,7 @@ namespace(ns, function() {
 
 testTask('Scaffold', ['scaffold:clean', 'scaffold:prepare-test-app'], function() {
   this.testFiles.exclude('test/helpers/**');
-  this.testFiles.exclude('test/fixtures/**');
+  //this.testFiles.exclude('test/fixtures/**');
   this.testFiles.exclude('test/geddy-test-app');
   this.testFiles.exclude('test/tmp/**');
   this.testFiles.include('test/**/*.js');
