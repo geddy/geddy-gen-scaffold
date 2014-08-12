@@ -31,7 +31,7 @@ var tests = {
   },
   'Create Zooby scaffold without engine and framework specified --bower': function(next)
   {
-    createScaffold('Zooby', ['--bower'], function(err, stdout, stderr) {
+    createScaffold('Zooby', ['title:string', 'weight:integer', '--bower'], function(err, stdout, stderr) {
       if (err) {
         console.error(err);
         fail();

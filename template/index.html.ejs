@@ -1,4 +1,6 @@
 <%
+var ue = genutils.template.unescaped;
+var e = genutils.template.escape;
 var btnClass, attrs, jadeAttrs;
 
 switch(framework.css) {
@@ -24,7 +26,7 @@ switch(framework.css) {
 
 <div<%- attrs %>>
     <h1>All <%= names.constructor.plural %></h1>
-    <%- genutils.template.unescaped("linkTo('Create a new " + names.constructor.singular + "', add" + names.constructor.singular + "Path, {class: '" + btnClass + "'})", engine); %>
+    <%- ue("linkTo('Create a new " + e(names.constructor.singular) + "', add" + e(names.constructor.singular) + "Path, {class: '" + btnClass + "'})", engine); %>
 </div>
 
 <%- genutils.template.partial('list', engine); %>
@@ -34,7 +36,7 @@ switch(framework.css) {
 <%- jadeAttrs %>
   h1
     All <%= names.constructor.plural %>
-  <%- genutils.template.unescaped("linkTo('Create a new " + names.constructor.singular + "', add" + names.constructor.singular + "Path, {class: '" + btnClass + "'})", engine); %>
+  <%- ue("linkTo('Create a new " + e(names.constructor.singular) + "', add" + e(names.constructor.singular) + "Path, {class: '" + btnClass + "'})", engine); %>
 
 <%- genutils.template.partial('list', engine); %>
 

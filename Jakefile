@@ -30,28 +30,23 @@ namespace(ns, function() {
   });
 
   desc('Creates a model scaffold.');
-  task('create', {async: true}, function(name, modelProperties, engine, framework, templatesDir) {
+  task('create', {async: true}, function(/*name, modelProperties*/) {
     if (!genutils.inAppRoot()) {
       fail('You must run this generator from the root of your application.');
       return;
     }
+
+    var args = Array.prototype.slice.call(arguments);
+    var name = args.shift();
+    var modelProperties = (args.length > 0) ? args : null;
 
     if (!name) {
       fail('Missing model name.');
       return;
     }
 
-    if (!modelProperties) {
-      var modelProperties = '';
-    }
-
-    if (!engine) {
-      var engine = process.env['engine'] || 'ejs';
-    }
-
-    if (!framework) {
-      var framework = process.env['framework'] || 'bootstrap/none';
-    }
+    var engine = process.env['engine'] || 'ejs';
+    var framework = process.env['framework'] || 'bootstrap/none';
 
     // parse the framework
     framework = framework.split('/', 2);
@@ -83,7 +78,7 @@ namespace(ns, function() {
     };
 
     // create resource
-    genutils.runGen('geddy-gen-resource', [name, modelProperties], onResourceGen);
+    genutils.runGen('geddy-gen-resource', [name].concat(modelProperties), onResourceGen);
 
     function onResourceGen(err)
     {

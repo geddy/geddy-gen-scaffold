@@ -1,4 +1,6 @@
 <%
+var ue = genutils.template.unescaped;
+var e = genutils.template.escape;
 var listAttrs, itemAttrs, jadeListAttrs, jadeItemAttrs;
 
 switch(framework.css) {
@@ -39,7 +41,7 @@ case 'ejs': %>
   {% for <%= names.property.singular %> in <%= names.property.plural %> %}
 <% break; } %>
   <div<%- itemAttrs %> id="<%= names.property.singular %>-<@= <%= names.property.plural %>[i].id; @>">
-    <h3><%- genutils.template.unescaped("linkTo(" + names.property.plural + "[i]." + properties['default'].name || "id" + ", " + names.property.singular + "Path(" + names.property.plural + "[i].id))", engine); %></h3>
+    <h3><%- ue("linkTo(" + e(names.property.plural) + "[i]." + properties['default'].name || "id" + ", " + e(names.property.singular) + "Path(" + e(names.property.plural) + "[i].id))", engine); %></h3>
   </div>
 <% switch(engine) {
 case 'ejs': %>
@@ -62,6 +64,6 @@ case 'ejs': %>
   each <%= names.property.singular %> in <%= names.property.plural %>
   <%- jadeItemAttrs %>#<%= names.property.singular %>-<@= <%= names.property.plural %>[i].id; @>
     h3
-      <%- genutils.template.unescaped("linkTo(" + names.property.plural + "[i]." + properties['default'].name || "id" + ", " + names.property.singular + "Path(" + names.property.plural + "[i].id))", engine); %>
+      <%- ue("linkTo(" + e(names.property.plural) + "[i]." + properties['default'].name || "id" + ", " + e(names.property.singular) + "Path(" + e(names.property.plural) + "[i].id))", engine); %>
 
 <% } %>

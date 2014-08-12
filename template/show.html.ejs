@@ -1,0 +1,66 @@
+<%
+var ue = genutils.template.unescaped;
+var e = genutils.template.escape;
+var attrs, jadeAttrs, propAttrs, jadePropAttrs, editBtnClass, backBtnClass;
+
+switch(framework.css) {
+  case 'bootstrap':
+    attrs = ' class="page-header"';
+    jadeAttrs = '.page-header';
+    propAttrs = ' class="row property"';
+    jadePropAttrs = '.row.property';
+    backBtnClass = 'btn btn-default pull-left';
+    editBtnClass = 'btn btn-primary pull-right';
+    break;
+
+  case 'foundation':
+    attrs = ' class="panel clearfix"';
+    jadeAttrs = '.panel.clearfix';
+    propAttrs = ' class="row property"';
+    jadePropAttrs = '.row.property';
+    backBtnClass = 'button secondary left';
+    editBtnClass = 'button right';
+    break;
+
+  default:
+    attrs = ' class="resource-header"';
+    jadeAttrs = '.resource-header';
+    backBtnClass = 'button back';
+    editBtnClass = 'button edit';
+}
+%>
+<% if (engine !== 'jade') { %>
+
+<div<%- attrs %>>
+  <h2 class="<%= properties['default'].name || "id" %>"><%= names.constructor.singular %>: <@= <%= names.property.singular %>.<%= properties['default'].name || "id" %> @></h2>
+  <%- ue("linkTo('Edit this " + e(names.property.singular) + ">', edit" + e(names.constructor.singular) + "Path(params.id), {class: '" + editBtnClass + "'})", engine); %>
+  <%- ue("linkTo('Back to list', " + e(names.property.singular) + "Path(''), {class: '" + backBtnClass + "'})", engine); %>
+</div>
+
+<h2><%= names.constructor.singular %> Properties</h2>
+<% for(var i in properties) { %>
+<div<%- propAttrs %>>
+  <h3 class="<%= i %>-label"><%= i %></h3>
+  <span class="<%= i %>-value"><@= <%= names.property.singular %>['<%= i %>'] @></span>
+</div>
+<% } %>
+
+<% } else { %>
+
+<%- jadeAttrs %>
+  h2.<%= properties['default'].name || "id" %>
+    <%= names.constructor.singular %>: <@= <%= names.property.singular %>.<%= properties['default'].name || "id" %> @>
+  <%- ue("linkTo('Edit this " + e(names.property.singular) + + ">', edit" + e(names.constructor.singular) + "Path(params.id), {class: '" + editBtnClass + "'})", engine); %>
+  <%- ue("linkTo('Back to list', " + e(names.property.singular) + "Path(''), {class: '" + backBtnClass + "'})", engine); %>
+
+h2
+  <%= names.constructor.singular %> Properties
+<% for(var i in properties) { %>
+<%- jadePropAttrs %>
+  h3.<%= i %>-label
+    <%= i %>
+  span.<%= i %>-value
+    <@= <%= names.property.singular %>['<%= i %>'] @>
+<% } %>
+
+<% } %>
